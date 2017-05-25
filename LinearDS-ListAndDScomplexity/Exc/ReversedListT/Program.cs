@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/// <summary>
+/// work test on ReversedList
+/// </summary>
 
-namespace ReversedListT
+using System;
+
+public class Program
 {
-    class Program
+    public static void Main()
     {
-        static void Main(string[] args)
+        ReversedList<int> proba = new ReversedList<int>();
+        proba.Add(1);
+        proba.Add(2);
+        proba.Add(3);
+        proba.Add(4);
+        proba.Add(5);
+        Console.WriteLine("Count = " + proba.Count);
+        Console.WriteLine("Capacity = " + proba.Capacity);
+        foreach (int a in proba)
         {
+            Console.WriteLine(a);
         }
+
     }
 }
