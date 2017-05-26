@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountOccurunces", "CountOcc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReversedListT", "ReversedListT\ReversedListT.csproj", "{930B6F8A-B135-4E6B-B5B0-871891D7BB9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceInLabyrinth", "DistanceInLabyrinth\DistanceInLabyrinth.csproj", "{8B0D5BBB-0F93-4F1B-B210-7674042BDEAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{930B6F8A-B135-4E6B-B5B0-871891D7BB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{930B6F8A-B135-4E6B-B5B0-871891D7BB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{930B6F8A-B135-4E6B-B5B0-871891D7BB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B0D5BBB-0F93-4F1B-B210-7674042BDEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B0D5BBB-0F93-4F1B-B210-7674042BDEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B0D5BBB-0F93-4F1B-B210-7674042BDEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B0D5BBB-0F93-4F1B-B210-7674042BDEAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
