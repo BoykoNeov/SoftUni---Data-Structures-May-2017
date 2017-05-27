@@ -42,7 +42,6 @@ public class DoublyLinkedListExpanded<T> : IEnumerable<T>
                 currentNode = currentNode.NextNode;
                 currentPosition++;
             }
-            // must implement a test
             return currentNode.Value;
         }
 
@@ -61,7 +60,6 @@ public class DoublyLinkedListExpanded<T> : IEnumerable<T>
                 currentNode = currentNode.NextNode;
                 currentPosition++;
             }
-            // must implement a test
             currentNode.Value = value;
         }
     }
@@ -104,12 +102,11 @@ public class DoublyLinkedListExpanded<T> : IEnumerable<T>
         this.Count++;
     }
 
-    // must test
     public void InsertAt(T element, int position)
     {
         if (position < 0 || position >= this.Count)
         {
-            throw new ArgumentOutOfRangeException("Cannot insert elements before the start of the list or at its end");
+            throw new ArgumentOutOfRangeException("Cannot insert elements before the start of the list or beyond its end");
         }
         else if (position == 0)
         {
@@ -127,12 +124,46 @@ public class DoublyLinkedListExpanded<T> : IEnumerable<T>
 
             ListNode<T> newNode = new ListNode<T>(element);
             currentNode.PrevNode.NextNode = newNode;
-            currentNode.PrevNode = newNode;
-
             newNode.PrevNode = currentNode.PrevNode;
             newNode.NextNode = currentNode;
+            currentNode.PrevNode = newNode;
+         //   currentNode.PrevNode = newNode;
+
+            //newNode.PrevNode = currentNode.PrevNode;
+            //newNode.NextNode = currentNode;
 
             this.Count++;
+        }
+    }
+
+    public T RemoveAt (int position)
+    {
+        if (position < 0 || position >= this.Count)
+        {
+            throw new ArgumentOutOfRangeException("Cannot remove elements before the start of the list or beyond its end");
+        }
+        else if (position == 0)
+        {
+            return this.RemoveFirst();
+        }
+        else if (position == this.Count - 1)
+        {
+            return this.RemoveLast();
+        }
+        else
+        {
+            int index = 0;
+            DoublyLinkedListExpanded<T>.ListNode<T> currentNode = this.head;
+            while (index < position)
+            {
+                currentNode = currentNode.NextNode;
+                index++;
+            }
+
+            currentNode.PrevNode.NextNode = currentNode.NextNode;
+            currentNode.NextNode.PrevNode = currentNode.PrevNode;
+            this.Count--;
+            return currentNode.Value;
         }
     }
 
@@ -178,6 +209,12 @@ public class DoublyLinkedListExpanded<T> : IEnumerable<T>
 
         this.Count--;
         return lastElement;
+    }
+
+    public void Clear()
+    {
+        this.head = this.tail = null;
+        Count = 0;
     }
 
     public void ForEach(Action<T> action)
@@ -260,9 +297,22 @@ class Example
         list[0] = 5;
         list[1] = 6;
         list[2] = 7;
+        list.AddLast(8);
+        list.AddLast(9);
+        list.AddLast(10);
         list.ForEach(Console.WriteLine);
         Console.WriteLine("--------------------");
-        list.InsertAt(10, 2);
+        list.InsertAt(20, 3);
         list.ForEach(Console.WriteLine);
+        Console.WriteLine("3---------3--------3");
+        Console.WriteLine(list.RemoveAt(4));
+        Console.WriteLine("--------------------");
+        list.ForEach(Console.WriteLine);
+        Console.WriteLine("4---------4--------4");
+        list.Clear();
+        Console.WriteLine("--------------------");
+        list.AddLast(8);
+        list.AddLast(9);
+        list.AddLast(10);
     }
 }

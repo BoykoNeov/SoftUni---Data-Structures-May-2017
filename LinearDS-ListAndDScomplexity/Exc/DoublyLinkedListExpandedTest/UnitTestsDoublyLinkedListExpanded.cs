@@ -10,6 +10,62 @@ namespace DoublyLinkedListExpanded.Tests
     public class UnitTestsDoublyLinkedListExpanded
     {
         [TestMethod]
+        public void DLLe_Access_And_Change_DLLe_elemenets_like_array()
+        {
+            // Arrange
+            var list = new DoublyLinkedListExpanded<string>();
+
+            // Act
+            list.AddFirst("10");
+            list.AddFirst("20");
+            list.AddFirst("30");
+
+            // Assert
+            Assert.AreEqual("10", list[2]);
+            Assert.AreEqual("30", list[0]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void DLLe_Access_Like_Array_Beyond_Count_ShouldThrowException()
+        {
+            // Arrange
+            var list = new DoublyLinkedListExpanded<int>();
+
+            // Act
+            var element = list[0];
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void DLLe_Access_Like_Array_Before_Zero_ShouldThrowException()
+        {
+            // Arrange
+            var list = new DoublyLinkedListExpanded<int>();
+
+            // Act
+            list.AddFirst(5);
+            var element = list[-1];
+        }
+
+        [TestMethod]
+        public void DLLe_Insert_Element_Inside()
+        {
+            // Arrange
+            var list = new DoublyLinkedListExpanded<int>();
+
+            // Act
+            list.AddFirst(0);
+            list.InsertAt(1, 0);
+            list.InsertAt(2, 1);
+
+            // Assert
+            var items = new List<int>();
+            list.ForEach(items.Add);
+            CollectionAssert.AreEqual(items, new List<int>() { 1, 2, 0 });
+        }
+
+        [TestMethod]
         public void DLLe_AddFirst_EmptyList_ShouldAddElement()
         {
             // Arrange
