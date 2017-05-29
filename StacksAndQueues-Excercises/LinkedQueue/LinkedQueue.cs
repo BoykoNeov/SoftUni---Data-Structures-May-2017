@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// Linked Queue
 /// </summary>
 /// <typeparam name="T"> Queue entries</typeparam>
-public class LinkedQueue<T> : IEnumerable<T>
+public class LinkedQueue<T> : IEnumerable
 {
     private class QueueNode<T>
     {
@@ -69,11 +69,11 @@ public class LinkedQueue<T> : IEnumerable<T>
 
     public void ForEach(Action<T> action)
     {
-        LinkedQueue<T>.QueueNode<T> currentNode = this.tail;
+        LinkedQueue<T>.QueueNode<T> currentNode = this.head;
         while (currentNode != null)
         {
             action(currentNode.Value);
-            currentNode = currentNode.PrevNode;
+            currentNode = currentNode.NextNode;
         }
     }
 
@@ -96,81 +96,14 @@ public class LinkedQueue<T> : IEnumerable<T>
     {
         T[] arr = new T[this.Count];
         int index = 0;
-        LinkedQueue<T>.QueueNode<T> currentNode = this.head;
+        LinkedQueue<T>.QueueNode<T> currentNode = this.tail;
 
         while (currentNode != null)
         {
             arr[index++] = currentNode.Value;
-            currentNode = currentNode.NextNode;
+            currentNode = currentNode.PrevNode;
         }
 
         return arr;
-    }
-}
-
-
-class Example
-{
-    static void Main()
-    {
-        var list = new LinkedQueue<int>();
-
-        list.ForEach(Console.WriteLine);
-        Console.WriteLine("--------------------");
-
-        list.Enqueue(5);
-        list.Enqueue(3);
-        list.Enqueue(2);
-        list.Enqueue(10);
-        list.Enqueue(11);
-        list.Enqueue(12);
-        list.Enqueue(13);
-        list.Enqueue(15);
-        Console.WriteLine("Count = {0}", list.Count);
-
-        Console.WriteLine("--------------------");
-        list.ForEach(Console.WriteLine);
-        Console.WriteLine("--------------------");
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine(list.Dequeue());
-        Console.WriteLine("Count = " + list.Count);
-        Console.WriteLine("--------------------");
-
-        for (int i = 0; i < 500; i++)
-        {
-            list.Enqueue(i);
-        }
-
-        for (int i = 0; i < 500; i++)
-        {
-            Console.Write(list.Dequeue() + " ");
-        }
-        //list.Enqueue(100);
-        //list.Enqueue(105);
-        //list.Enqueue(110);
-        //list.Enqueue(120);
-        //list.Enqueue(200);
-        //list.Enqueue(300);
-        //list.Enqueue(400);
-        //list.Enqueue(500);
-        //Console.WriteLine("Count = " + list.Count);
-        //list.ForEach(Console.WriteLine);
-        //Console.WriteLine("--------------------");
-
-        //list.Dequeue();
-        //list.Dequeue();
-        //list.Dequeue();
-        //list.Dequeue();
-        //list.Enqueue(5000);
-
-
-        //list.ForEach(Console.WriteLine);
-        //Console.WriteLine("--------------------");
     }
 }

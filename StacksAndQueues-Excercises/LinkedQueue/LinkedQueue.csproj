@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4C8FC339-BE66-47BF-80A0-DE6CF9D751BE}</ProjectGuid>
+    <ProjectGuid>{31247084-8B2A-4326-B70B-051539B71D5D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>LinkedQueue</RootNamespace>
     <AssemblyName>LinkedQueue</AssemblyName>
