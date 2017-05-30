@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿/// <summary>
+/// Implement a stack by a "linked list" as underlying data structure
+/// </summary>
+/// <typeparam name="T">generic stack item</typeparam>
+using System;
 public class LinkedStack<T>
 {
     public class Node<T>

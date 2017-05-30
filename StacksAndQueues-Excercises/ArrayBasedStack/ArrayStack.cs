@@ -1,4 +1,17 @@
 ﻿using System;
+/// <summary>
+/// Follow the concepts from the CircularQueue<T> class from the exercises in class. The stack is simpler than the circular queue, so you will need to follow the same logic, but more simplified. Some hints:
+/// The stack capacity is this.elements.Length
+/// Keep the stack size (number of elements) in this.Count
+/// Push(element) just saves the element in elements [this.Count]
+/// and increases this.Count
+/// Push(element) should invoke Grow() in case of this.Count == this.elements.Length
+/// Pop() decreases this.Count and returns this.elements [this.Count]
+/// Grow() allocates a new array newElements of size 2 * this.elements.Length and copies the first this.Count elements from this.elements to newElements.Finally, assign this.elements = newElements
+/// ToArray() just creates and returns a sub-array of this.elements[0…this.Count - 1]
+/// Pop() should throw InvalidOperationException (or UnsupportedOperationException) if the stack is empty
+/// </summary>
+/// <typeparam name="T">generic stack item</typeparam>
 public class ArrayStack<T>
 {
     private const int DefaultCapacity = 4;
