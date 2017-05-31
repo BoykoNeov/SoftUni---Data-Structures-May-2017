@@ -68,7 +68,7 @@ internal class Tree<T>
         results.Add(tree.Value);
         foreach (Tree<T> child in tree.Children)
         {
-            child.OrderDFSsubmethod(child, results);
+            child.PreOrderDFSsubmethod(child, results);
         }
     }
 

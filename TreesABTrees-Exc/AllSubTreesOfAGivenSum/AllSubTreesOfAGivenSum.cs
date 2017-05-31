@@ -11,6 +11,7 @@ internal class AllSubTreesOfAGivenSum
 
     internal static void Main()
     {
+        var a = nodeByValue;
         ReadTree();
         int treeRequiredSum = int.Parse(Console.ReadLine());
         List<string> results = new List<string>();
@@ -31,7 +32,6 @@ internal class AllSubTreesOfAGivenSum
         {
             Console.WriteLine(tree);
         }
-
     }
 
     internal static Tree<int> GetTreeNodeByValue(int value)
