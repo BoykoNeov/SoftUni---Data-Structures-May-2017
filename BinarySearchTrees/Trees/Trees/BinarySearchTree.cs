@@ -523,7 +523,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
 
             if (currentNode == null)
             {
-                throw new ArgumentException("Valie with a given node does not exist in the current Binary Search Tree");
+                throw new ArgumentException("Node with a given value does not exist in the current Binary Search Tree");
             }
         }
 
@@ -622,7 +622,7 @@ public class Launcher
         Console.WriteLine("---------");
 
 
-        bst.Delete(4);
+        bst.Delete(445);
         bst.EachInOrder(Console.WriteLine);
         Console.WriteLine("---------");
         
