@@ -603,7 +603,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
             }
             else
             {
-                BinarySearchTree<T> subtreeWithRootToBeDeleted = this.Search(nodeForDeletion.Value);
+                BinarySearchTree<T> subtreeWithRootToBeDeleted = this.Search(nodeForDeletion.RightChild.Value);
                 T minimumValueInTheSubtree = subtreeWithRootToBeDeleted.Select(0);
                 this.Delete(minimumValueInTheSubtree);
                 nodeForDeletion.Value = minimumValueInTheSubtree;
@@ -629,7 +629,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
             }
             else
             {
-                BinarySearchTree<T> subtreeWithRootToBeDeleted = this.Search(nodeForDeletion.Value);
+                BinarySearchTree<T> subtreeWithRootToBeDeleted = this.Search(nodeForDeletion.RightChild.Value);
                 T minimumValueInTheSubtree = subtreeWithRootToBeDeleted.Select(0);
                 this.Delete(minimumValueInTheSubtree);
                 nodeForDeletion.Value = minimumValueInTheSubtree;
