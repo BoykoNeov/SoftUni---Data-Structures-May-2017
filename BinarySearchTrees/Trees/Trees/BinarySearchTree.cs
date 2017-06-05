@@ -176,7 +176,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
     {
         if (this.Root == null)
         {
-            throw new ArgumentOutOfRangeException("Tree is empty");
+            throw new InvalidOperationException("Tree is empty");
         }
 
         Node<T> minimumNode = this.Root;
@@ -240,6 +240,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
     /// <returns>new BST in the given range</returns>
     public IEnumerable<T> Range(T startRange, T endRange)
     {
+
         Queue<T> results = new Queue<T>();
 
         this.Range(this.Root, startRange, endRange, results);
@@ -398,11 +399,16 @@ public class BinarySearchTree<T> where T : IComparable<T>
     /// <returns> The first element with "smallerElementsCount" smaller elements before it </returns>
     public T Select(int smallerElementsCount)
     {
+        if (this.Root == null)
+        {
+            throw new InvalidOperationException("Tree is empty");
+        }
+
         List<T> allElements = new List<T>();
         this.EachInOrder(allElements.Add);
         if (smallerElementsCount >= allElements.Count)
         {
-            throw new ArgumentOutOfRangeException("The given count is equal or larger than the number of elements");
+            throw new InvalidOperationException("The given count is equal or larger than the number of elements");
         }
         else
         {
@@ -417,10 +423,16 @@ public class BinarySearchTree<T> where T : IComparable<T>
     /// <returns></returns>
     public T Floor(T element)
     {
+        if (this.Root == null)
+        {
+            throw new InvalidOperationException("Tree is empty");
+        }
+
         List<T> allElements = new List<T>();
         this.EachInOrder(allElements.Add);
 
         T currentElement = default(T);
+
         for (int i = 0; i < allElements.Count; i++)
         {
             if (allElements[i].CompareTo(element) >= 0)
@@ -437,10 +449,15 @@ public class BinarySearchTree<T> where T : IComparable<T>
     /// <summary>
     /// Implement a method which finds (returns) the nearest larger value than given in the BST. 
     /// </summary>
-    /// <param name="element">Searchehs for the nearest value after the given element</param>
+    /// <param name="element">Searches for the nearest value after the given element</param>
     /// <returns></returns>
     public T Ceiling(T element)
     {
+        if (this.Root == null)
+        {
+            throw new InvalidOperationException("Tree is empty");
+        }
+
         List<T> allElements = new List<T>();
         this.EachInOrder(allElements.Add);
 
@@ -452,7 +469,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
             }
         }
 
-        return default(T);
+        throw new InvalidOperationException("No item in BST is larger than given value");
     }
 
     /// <summary>
@@ -540,7 +557,30 @@ public class BinarySearchTree<T> where T : IComparable<T>
         // if ParentNode == null, node to be deleted is root
         if (ParentNode == null)
         {
-            this.Root = null;
+            if (this.Root.LeftChild == null && this.Root.RightChild == null)
+            {
+                this.Root = null;
+            }
+            else if (this.Root.LeftChild != null && this.Root.RightChild == null)
+            {
+                this.Root = this.Root.LeftChild;
+            }
+            else if (this.Root.LeftChild == null && this.Root.RightChild != null)
+            {
+                this.Root = this.Root.RightChild;
+            }
+            else
+            {
+                // finds the minimum value in the right subtree
+                BinarySearchTree<T> subtreeWithRootToBeDeleted = this.Search(this.Root.RightChild.Value);
+                // Keeps the minimum value in the right subtree, successor to the root
+                T minimumValueInTheSubtree = subtreeWithRootToBeDeleted.Select(0);
+                // Deletes the successor
+                this.Delete(minimumValueInTheSubtree);
+                // Replaces the root with successor value
+                this.Root.Value = minimumValueInTheSubtree;
+            }
+
             return;
         }
 
@@ -569,6 +609,7 @@ public class BinarySearchTree<T> where T : IComparable<T>
                 nodeForDeletion.Value = minimumValueInTheSubtree;
             }
         }
+
         // node to be deleted is right child
         else
         {
@@ -622,10 +663,10 @@ public class Launcher
         Console.WriteLine("---------");
 
 
-        bst.Delete(445);
-        bst.EachInOrder(Console.WriteLine);
+//        bst.EachInOrder(Console.WriteLine);
         Console.WriteLine("---------");
-        
+        Console.WriteLine(bst.Floor(1));
+
 
 
     }
