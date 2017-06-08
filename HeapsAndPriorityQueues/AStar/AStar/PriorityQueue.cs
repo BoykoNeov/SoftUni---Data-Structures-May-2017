@@ -43,11 +43,25 @@ public class PriorityQueue<T> where T : IComparable<T>
         return item;
     }
 
+    /// <summary>
+    /// Heapifies up and element, which value was decreased after addition to the queue
+    /// </summary>
+    /// <param name="item">item with decreased value</param>
     public void DecreaseKey(T item)
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < heap.Count; i++)
+        {
+            if (heap[i].Equals(item))
+            {
+                HeapifyUp(i);
+            }
+        }
     }
 
+    /// <summary>
+    /// moves an element up, to its correct position in the heap
+    /// </summary>
+    /// <param name="index">index in the heap of element to be moved up</param>
     private void HeapifyUp(int index)
     {
         while (index > 0 && IsLess(index, Parent(index)))
@@ -87,11 +101,21 @@ public class PriorityQueue<T> where T : IComparable<T>
         return (index - 1) / 2;
     }
 
+    /// <summary>
+    /// returns index of left child
+    /// </summary>
+    /// <param name="index">index of parent</param>
+    /// <returns>index of left child</returns>
     private static int Left(int index)
     {
         return 2 * index + 1;
     }
 
+    /// <summary>
+    /// returns index of right child
+    /// </summary>
+    /// <param name="index">index of parent</param>
+    /// <returns>index of right child</returns>
     private static int Right(int index)
     {
         return Left(index) + 1;
@@ -102,6 +126,11 @@ public class PriorityQueue<T> where T : IComparable<T>
         return this.heap[a].CompareTo(this.heap[b]) < 0;
     }
 
+    /// <summary>
+    /// Swaps two elements in the heap
+    /// </summary>
+    /// <param name="a">index of first element</param>
+    /// <param name="b">index of second element</param>
     private void Swap(int a, int b)
     {
         T temp = this.heap[a];

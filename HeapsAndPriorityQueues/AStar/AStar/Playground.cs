@@ -2,15 +2,26 @@
 
 public class Playground
 {
-    private static char[,] map =
-    {
-                    { '-', '-', '-', '-', '-', '-', '-', '-' },
-                    { '-', '-', '*', '-', '-', '-', '-', '-' },
-                    { 'W', 'W', 'W', 'W', 'W', '-', '-', '-' },
-                    { '-', '-', '-', '-', 'W', 'W', '-', '-' },
-                    { '-', '-', '-', 'P', 'W', '-', '-', '-' },
-                    { '-', '-', '-', '-', '-', '-', '-', '-' }
-         };
+    //private static char[,] map =
+    //{
+    //                { '-', '-', '-', '-', '-', '-', '-', '-' },
+    //                { '-', '-', '*', '-', '-', '-', '-', '-' },
+    //                { 'W', 'W', 'W', 'W', 'W', '-', '-', '-' },
+    //                { '-', '-', '-', '-', 'W', 'W', '-', '-' },
+    //                { '-', '-', '-', 'P', 'W', '-', '-', '-' },
+    //                { '-', '-', '-', '-', '-', '-', '-', '-' }
+         //};
+
+   private static char[,] map =
+{
+                    { '-', '-', '-', '-', '-' },
+                    { '-', '-', '*', '-', '-' },
+                    { '-', 'W', 'W', 'W', '-' },
+                    { '-', '-', '-', '-', '-' },
+                    { '-', '-', '-', 'P', '-' },
+                    { '-', '-', '-', '-', '-' }
+            };
+
 
     static void Main()
     {
@@ -30,7 +41,12 @@ public class Playground
         }
 
         PrintMap();
-
+        //Console.WriteLine("-------");
+        //PriorityQueue<int> testPriorityQueue = new PriorityQueue<int>();
+        //testPriorityQueue.Enqueue(1);
+        //testPriorityQueue.Enqueue(2);
+        //testPriorityQueue.Enqueue(3);
+        //Console.WriteLine(testPriorityQueue.Dequeue());
     }
 
     private static char[,] ReadMap()

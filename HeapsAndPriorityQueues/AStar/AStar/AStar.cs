@@ -79,22 +79,39 @@ public class AStar
             }
         }
 
+        List<Node> result = new List<Node>();
+
         Node lastNode = goal;
         if (!Parent.ContainsKey(lastNode))
         {
-            yield return start;
+            result.Add(start);
         }
         else
         {
-            yield return lastNode;
+            result.Add(lastNode);
             while (Parent[lastNode] != null)
             {
-                yield return Parent[lastNode];
+                result.Add(Parent[lastNode]);
                 lastNode = Parent[lastNode];
             }
         }
 
+        result.Reverse();
+        return result;
 
-
+        //Node lastNode = goal;
+        //if (!Parent.ContainsKey(lastNode))
+        //{
+        //    yield return start;
+        //}
+        //else
+        //{
+        //    yield return lastNode;
+        //    while (Parent[lastNode] != null)
+        //    {
+        //        yield return Parent[lastNode];
+        //        lastNode = Parent[lastNode];
+        //    }
+        //}
     }
 }
