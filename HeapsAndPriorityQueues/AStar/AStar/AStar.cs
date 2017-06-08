@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// A* algorithm - finds the shortest path between P and *, W nodes are not accessible
+/// </summary>
 public class AStar
 {
     public Dictionary<Node, Node> Parent { get; private set; }
