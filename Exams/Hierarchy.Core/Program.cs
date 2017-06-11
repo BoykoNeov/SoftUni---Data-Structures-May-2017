@@ -1,5 +1,5 @@
-﻿namespace Hierarchy.Core
-{
+﻿//namespace Hierarchy.Core
+//{
     using System;
 
     class Program
@@ -31,4 +31,4 @@
             }
         }
     }
-}
+//}

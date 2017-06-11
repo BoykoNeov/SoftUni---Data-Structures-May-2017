@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Hierarchy.Core
-{
+//namespace Hierarchy.Core
+//{
     public interface IHierarchy<T> : IEnumerable<T>
     {
         int Count { get; }
@@ -18,4 +18,4 @@ namespace Hierarchy.Core
 
         IEnumerable<T> GetCommonElements(Hierarchy<T> other);
     }
-}
+//}
