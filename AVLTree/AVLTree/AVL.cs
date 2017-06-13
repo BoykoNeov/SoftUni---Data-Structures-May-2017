@@ -45,7 +45,77 @@ public class AVL<T> where T : IComparable<T>
             node.Right = this.Insert(node.Right, item);
         }
 
+        node = BalanceNode(node);
+        UpdateHeight(node);
         return node;
+    }
+
+    private Node<T> BalanceNode(Node<T> node)
+    {
+        int balanceFactor = Height(node.Left) - Height(node.Right);
+
+        if (balanceFactor > 1)
+        {
+            if (Height(node.Left.Left) - Height(node.Left.Right) < 0)
+            {
+                node.Left = RotateLeft(node.Left);
+            }
+
+            node = RotateRight(node);
+            return node;
+        }
+
+        if (balanceFactor < -1)
+        {
+            if (Height(node.Right.Left) - Height(node.Right.Right) > 0)
+            {
+                node.Right = RotateRight(node.Right);
+            }
+
+            node = RotateLeft(node);
+        }
+
+        return node;
+    }
+
+    private int Height(Node<T> node)
+    {
+        if (node == null)
+        {
+            return 0;
+        }
+        else
+        {
+            return node.Height;
+        }
+    }
+
+    private void UpdateHeight(Node<T> node)
+    {
+        //  node.Height = Math.Max((node.Left?.Height ?? 0), (node.Right?.Height ?? 0)) + 1;
+        node.Height = Math.Max(Height(node.Left), Height(node.Right)) + 1;
+    }
+
+    private Node<T> RotateRight(Node<T> node)
+    {
+        Node<T> leftChild = node.Left;
+        node.Left = leftChild.Right;
+        leftChild.Right = node;
+
+        UpdateHeight(node);
+
+        return leftChild;
+    }
+
+    private Node<T> RotateLeft(Node<T> node)
+    {
+        Node<T> rightChild = node.Right;
+        node.Right = rightChild.Left;
+        rightChild.Left = node;
+
+        UpdateHeight(node);
+
+        return rightChild;
     }
 
     private Node<T> Search(Node<T> node, T item)
