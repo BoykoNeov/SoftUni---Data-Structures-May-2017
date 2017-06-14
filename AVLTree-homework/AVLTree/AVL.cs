@@ -23,21 +23,6 @@ public class AVL<T> where T : IComparable<T>
         this.root = this.Insert(this.root, item);
     }
 
-    public void Delete(int v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteMin()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void EachInOrder(Action<T> action)
-    {
-        this.EachInOrder(this.root, action);
-    }
-
     private Node<T> Insert(Node<T> node, T item)
     {
         if (node == null)
@@ -46,6 +31,7 @@ public class AVL<T> where T : IComparable<T>
         }
 
         int cmp = item.CompareTo(node.Value);
+
         if (cmp < 0)
         {
             node.Left = this.Insert(node.Left, item);
@@ -56,8 +42,99 @@ public class AVL<T> where T : IComparable<T>
         }
 
         node = Balance(node);
-        UpdateHeight(node);
         return node;
+    }
+
+    public void Delete(T item)
+    {
+        this.root = Delete(this.root, item);
+    }
+
+    private Node<T> Delete(Node<T> node, T item)
+    {
+        if (node == null)
+        {
+            // again, why not an exception?
+            return null;
+        }
+
+        int compare = item.CompareTo(node.Value);
+
+        if (compare < 0)
+        {
+            node.Left = Delete(node.Left, item);
+        }
+        else if (compare > 0)
+        {
+            node.Right = Delete(node.Right, item);
+        }
+        else
+        {
+            if (node.Right == null)
+            {
+                return node.Left;
+            }
+            else if (node.Left == null)
+            {
+                return node.Right;
+            }
+
+            else
+            {
+                //var min = FindMin(node.Right);
+                //min.Right = DeleteMin(node.Right);
+                //min.Left = node.Left;
+                //node = min;
+
+                var mininumChild = FindMin(node.Right);
+                T minimumChildValue = mininumChild.Value;
+                node.Right = DeleteMin(node.Right);
+                node.Value = minimumChildValue;
+            }
+        }
+
+        node = Balance(node);
+        return node;
+    }
+
+    public void DeleteMin()
+    {
+        this.root = DeleteMin(this.root);
+    }
+
+    private Node<T> DeleteMin(Node<T> node)
+    {
+        if (node == null)
+        {
+            //shouldn't this throw an exception, isn't it more logical?
+            return null;
+        }
+
+        if (node.Left == null)
+        {
+            return node.Right;
+        }
+
+        node.Left = DeleteMin(node.Left);
+        node = Balance(node);
+        return node;
+    }
+
+    public Node<T> FindMin(Node<T> node)
+    {
+        Node<T> currentNode = node;
+
+        while (currentNode.Left != null)
+        {
+            currentNode = currentNode.Left;
+        }
+
+        return currentNode;
+    }
+
+    public void EachInOrder(Action<T> action)
+    {
+        this.EachInOrder(this.root, action);
     }
 
     private Node<T> Balance(Node<T> node)
@@ -84,6 +161,7 @@ public class AVL<T> where T : IComparable<T>
             node = RotateLeft(node);
         }
 
+        UpdateHeight(node);
         return node;
     }
 
