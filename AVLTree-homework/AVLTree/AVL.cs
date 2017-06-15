@@ -107,7 +107,7 @@ public class AVL<T> where T : IComparable<T>
         if (node == null)
         {
             //shouldn't this throw an exception, isn't it more logical?
-            return null;
+           return null;
         }
 
         if (node.Left == null)
