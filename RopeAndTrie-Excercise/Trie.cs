@@ -44,6 +44,32 @@ public class Trie<Value>
         return results;
     }
 
+    public void Delete(string key)
+    {
+        this.root = this.Delete(this.root, key, 0);
+    }
+
+    private Node Delete(Node x, string key, int d)
+    {
+        if (x == null) return null;
+
+        Node node = null;
+        if (d == key.Length)
+        {
+            x.IsTerminal = false;
+            return x;
+        }
+        char c = key[d];
+
+        if (x.Next.ContainsKey(c))
+        {
+            node = x.Next[c];
+        }
+
+        x.Next[c] = this.Delete(node, key, d + 1);
+        return x;
+    }
+
     private Node GetNode(Node x, string key, int d)
     {
         if (x == null)
