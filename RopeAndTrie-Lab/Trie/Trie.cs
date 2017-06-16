@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Trie<Value>
 {
-    private Node root;
+    private Node root = new Node();
 
     private class Node
     {
@@ -31,7 +31,23 @@ public class Trie<Value>
 
     public void Insert(string key, Value val)
     {
-        root = Insert(root, key, val, 0);
+        var currentNode = this.root;
+
+        for (int i = 0; i < key.Length; i++)
+        {
+            if (!currentNode.next.ContainsKey(key[i]))
+            {
+                currentNode.next.Add(key[i], new Node());
+            }
+
+            currentNode = currentNode.next[key[i]];
+
+            if (i == key.Length - 1)
+            {
+                currentNode.isTerminal = true;
+                currentNode.val = val;
+            }
+        }
     }
 
     public IEnumerable<string> GetByPrefix(string prefix)
@@ -67,11 +83,11 @@ public class Trie<Value>
         return GetNode(node, key, d + 1);
     }
 
-    private Node Insert(Node x, string key, Value val, int d)
-    {
-       //ToDo: Create insert
-       throw new NotImplementedException();
-    }
+    //private Node Insert(Node x, string key, Value val, int d)
+    //{
+    //   //ToDo: Create insert
+    //   throw new NotImplementedException();
+    //}
 
     private void Collect(Node x, string prefix, Queue<string> results)
     {
