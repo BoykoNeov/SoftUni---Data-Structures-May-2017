@@ -10,7 +10,7 @@ namespace TrieRope
     class StringEditor : ITextEditor
     {
 
-
+         
         public StringEditor()
         {
 
