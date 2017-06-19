@@ -1,49 +1,106 @@
 ﻿using System;
+using System.Linq;
 using Wintellect.PowerCollections;
-namespace TrieRope
+
+public class Launcher
 {
-    public class Launcher
+    public static void Main()
     {
-        public static void Main()
+        string command = string.Empty;
+        StringEditor textEditor = new StringEditor();
+
+        while ((command = Console.ReadLine()) != "end")
         {
-            Trie<string> proba = new Trie<string>();
-            proba.Insert("bace", "123");
-            Console.WriteLine(proba.GetValue("bace"));
-            proba.Insert("bace", "653");
-            Console.WriteLine(proba.GetValue("bace"));
+            string[] inputs = command.Split();
 
-            BigList<string> probaBigList = new BigList<string>();
-            probaBigList.Insert(0, "erdfdgdfdg");
-            Console.WriteLine(string.Join("", probaBigList));
+            try
+            {
+                if (inputs[0] == "login")
+                {
+                    textEditor.Login(inputs[1]);
+                    continue;
+                }
 
-            StringEditor stringEditor = new StringEditor();
+                if (inputs[0] == "users")
+                {
+                    if (inputs.Length > 1)
+                    {
+                        foreach (string user in textEditor.Users(inputs[1]))
+                        {
+                            Console.WriteLine(user);
+                        }
+                    }
+                    else
+                    {
+                        foreach (string user in textEditor.Users())
+                        {
+                            Console.WriteLine(user);
+                        }
+                    }
 
-            stringEditor.Login("pesho");
-            //stringEditor.Login("pesho");
+                    continue;
+                }
 
-            stringEditor.Prepend("pesho", "1234567890");
-            stringEditor.Prepend("pesho", "ABCDEFGHIG".ToLower());
-            stringEditor.Prepend("pesho", "1234567890");
-            stringEditor.Substring("pesho", 1, 2);
-            Console.WriteLine(stringEditor.Print("pesho"));
+                if (inputs[0] == "logout")
+                {
+                    textEditor.Logout(inputs[1]);
+                    continue;
+                }
 
-            //stringEditor.Logout("pesho");
-            //stringEditor.Undo("pesho");
-            //stringEditor.Undo("pesho");
-            //stringEditor.Undo("pesho");
-            //stringEditor.Undo("pesho");
+                if (inputs[1] == "prepend")
+                {
+                    string[] stringToPrepend = command.Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries).Skip(1).Take(1).ToArray();
+                    textEditor.Prepend(inputs[0], stringToPrepend[0]);
+                    continue;
+                }
 
+                if (inputs[1] == "print" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    Console.WriteLine(textEditor.Print(inputs[0]));
+                    continue;
+                }
 
+                if (inputs[1] == "delete" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    textEditor.Delete(inputs[0], int.Parse(inputs[2]), int.Parse(inputs[3]));
+                    continue;
+                }
 
-            //stringEditor.Prepend("pesho", "stringexample");
-            //stringEditor.Delete("pesho", 3, 6);
-            //stringEditor.Undo("pesho");
+                if (inputs[1] == "delete" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    textEditor.Delete(inputs[0], int.Parse(inputs[2]), int.Parse(inputs[3]));
+                    continue;
+                }
 
-            //stringEditor.Substring("pesho", 0, 3);
-            //stringEditor.Undo("pesho");
+                if (inputs[1] == "insert" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    string[] stringToInsert = command.Split(new char[] { '"' }, StringSplitOptions.RemoveEmptyEntries).Skip(1).Take(1).ToArray();
+                    textEditor.Insert(inputs[0], int.Parse(inputs[2]), stringToInsert[0]);
+                    continue;
+                }
 
+                if (inputs[1] == "length" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    Console.WriteLine(textEditor.Length(inputs[0]));
+                    continue;
+                }
 
-            //Console.WriteLine(stringEditor.Print("pesho"));
-        }
+                if (inputs[1] == "clear" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    textEditor.Clear(inputs[0]);
+                    continue;
+                }
+
+                if (inputs[1] == "substring" && textEditor.userStrings.ContainsKey(inputs[0]))
+                {
+                    textEditor.Substring(inputs[0], int.Parse(inputs[2]), int.Parse(inputs[3]));
+                    continue;
+                }
+            }
+            catch
+            {
+
+            }
+            }
     }
-}
+    }

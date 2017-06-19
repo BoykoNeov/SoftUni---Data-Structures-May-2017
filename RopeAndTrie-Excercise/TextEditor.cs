@@ -1,159 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Wintellect.PowerCollections;
 
-namespace TrieRope
+class StringEditor : ITextEditor
 {
-    class StringEditor : ITextEditor
+    public Trie<string> loggedUsers;
+    public Dictionary<string, Stack<BigList<char>>> userStrings;
+
+    public StringEditor()
     {
-        public Trie<string> loggedUsers;
-        public Dictionary<string, Stack<BigList<char>>> userStrings;
+        loggedUsers = new Trie<string>();
+        userStrings = new Dictionary<string, Stack<BigList<char>>>();
+    }
 
-        public StringEditor()
+    public void Login(string username)
+    {
+        loggedUsers.Insert(username, string.Empty);
+        userStrings[username] = new Stack<BigList<char>>();
+    }
+
+    public void Logout(string username)
+    {
+        loggedUsers.Delete(username);
+        userStrings.Remove(username);
+    }
+
+    public string Print(string username)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
         {
-            loggedUsers = new Trie<string>();
-            userStrings = new Dictionary<string, Stack<BigList<char>>>();
+            return null;
         }
 
-        public void Login(string username)
+        string currentString = string.Empty;
+        currentString = string.Join("", userStrings[username].Peek());
+        return currentString;
+    }
+
+    public void Prepend(string username, string str)
+    {
+        if (!userStrings.ContainsKey(username))
         {
-            loggedUsers.Insert(username, string.Empty);
-            userStrings[username] = new Stack<BigList<char>>();
+            return;
         }
 
-        public void Logout(string username)
+        BigList<char> newString = new BigList<char>();
+
+        if (userStrings[username].Count > 0)
         {
-            loggedUsers.Delete(username);
-            userStrings.Remove(username);
+            newString = userStrings[username].Peek().Clone();
         }
 
-        public string Print(string username)
-        {
-            if (!userStrings.ContainsKey(username))
-            {
-                return null;
-            }
+        newString.AddRangeToFront(str);
+        userStrings[username].Push(newString);
+    }
 
-            string currentString = string.Empty;
-            currentString = string.Join("", userStrings[username].Peek());
-            return currentString;
+    public void Clear(string username)
+    {
+        if (!userStrings.ContainsKey(username))
+        {
+            return;
         }
 
-        public void Prepend(string username, string str)
+        BigList<char> newString = new BigList<char>();
+        userStrings[username].Push(newString);
+    }
+
+    public void Delete(string username, int startIndex, int length)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
         {
-            if (!userStrings.ContainsKey(username))
-            {
-                return;
-            }
-
-            BigList<char> newString = new BigList<char>();
-
-            if (userStrings[username].Count > 0)
-            {
-                newString = userStrings[username].Peek().Clone();
-            }
-
-            newString.AddRangeToFront(str);
-            userStrings[username].Push(newString);
+            return;
         }
 
-        public void Clear(string username)
-        {
-            if (!userStrings.ContainsKey(username))
-            {
-                return;
-            }
+        BigList<char> newString = new BigList<char>();
+        newString = userStrings[username].Peek().Clone();
+        newString.RemoveRange(startIndex, length);
+        userStrings[username].Push(newString);
 
-            BigList<char> newString = new BigList<char>();
-            userStrings[username].Push(newString);
+    }
+
+    public void Insert(string username, int index, string str)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
+        {
+            return;
         }
 
-        public void Delete(string username, int startIndex, int length)
+        BigList<char> newString = new BigList<char>();
+        newString = userStrings[username].Peek().Clone();
+        newString.InsertRange(index, str);
+        userStrings[username].Push(newString);
+    }
+
+    public int Length(string username)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
         {
-            if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
-            {
-                return;
-            }
+            return 0;
+        }
+        else
+        {
+            int result = userStrings[username].Peek().Count;
+            return result;
+        }
+    }
 
-            try
-            {
-                BigList<char> newString = new BigList<char>();
-                newString = userStrings[username].Peek().Clone();
-                newString.RemoveRange(startIndex, length);
-                userStrings[username].Push(newString);
-            }
-            catch
-            {
-            }
-
+    public void Substring(string username, int startIndex, int length)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
+        {
+            return;
         }
 
-        public void Insert(string username, int index, string str)
-        {
-            if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
-            {
-                return;
-            }
+        BigList<char> newString = new BigList<char>();
+        newString.AddRangeToFront(userStrings[username].Peek().Range(startIndex, length));
+        userStrings[username].Push(newString);
+    }
 
-            try
-            {
-                BigList<char> newString = new BigList<char>();
-                newString = userStrings[username].Peek().Clone();
-                newString.InsertRange(index, str);
-                userStrings[username].Push(newString);
-            }
-            catch
-            {
-            }
+    public void Undo(string username)
+    {
+        if (!userStrings.ContainsKey(username) || userStrings[username].Count <= 1)
+        {
+            return;
         }
 
-        public int Length(string username)
-        {
-            if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                int result = userStrings[username].Peek().Count;
-                return result;
-            }
-        }
+        userStrings[username].Pop();
 
-        public void Substring(string username, int startIndex, int length)
-        {
-            if (!userStrings.ContainsKey(username) || userStrings[username].Count == 0)
-            {
-                return;
-            }
+    }
 
-            try
-            {
-                BigList<char> newString = new BigList<char>();
-                newString.AddRangeToFront(userStrings[username].Peek().Range(startIndex, length));
-                userStrings[username].Push(newString);
-            }
-            catch
-            {
-            }
-        }
-
-        public void Undo(string username)
-        {
-            if (!userStrings.ContainsKey(username) || userStrings[username].Count <= 1)
-            {
-                return;
-            }
-
-            userStrings[username].Pop();
-
-        }
-
-        public IEnumerable<string> Users(string prefix = "")
-        {
-           return loggedUsers.GetByPrefix(prefix);
-        }
+    public IEnumerable<string> Users(string prefix = "")
+    {
+        return loggedUsers.GetByPrefix(prefix);
     }
 }
