@@ -25,11 +25,25 @@ public class Point2D : IComparable<Point2D>
         return this.X == that.X && this.Y == that.Y;
     }
 
+    public static bool operator ==(Point2D firstPoint, Point2D secondPoint)
+    {
+        return firstPoint.Equals(secondPoint);
+    }
+
+    public static bool operator !=(Point2D firstPoint, Point2D secondPoint)
+    {
+        return !firstPoint.Equals(secondPoint);
+    }
+
     public override int GetHashCode()
     {
         int hashX = this.X.GetHashCode();
         int hashY = this.Y.GetHashCode();
-        return 31 * hashX + hashY;
+
+        unchecked
+        {
+            return 17 * hashX + hashY;
+        }
     }
 
     public int CompareTo(Point2D that)
