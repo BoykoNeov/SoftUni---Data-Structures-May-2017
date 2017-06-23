@@ -21,7 +21,7 @@ public class Item : IComparable
         return this.X1.CompareTo(that.X1);
     }
 
-    public static bool operator >(Item first, Item second)
+    public static bool operator > (Item first, Item second)
     {
         if (first.X1 > second.X1)
         {
@@ -33,7 +33,7 @@ public class Item : IComparable
         }
     }
 
-    public static bool operator <(Item first, Item second)
+    public static bool operator < (Item first, Item second)
     {
         if (first.X1 < second.X1)
         {
@@ -45,7 +45,7 @@ public class Item : IComparable
         }
     }
 
-    public static bool operator >=(Item first, Item second)
+    public static bool operator >= (Item first, Item second)
     {
         if (first.X1 >= second.X1)
         {
@@ -57,7 +57,7 @@ public class Item : IComparable
         }
     }
 
-    public static bool operator <=(Item first, Item second)
+    public static bool operator <= (Item first, Item second)
     {
         if (first.X1 <= second.X1)
         {
