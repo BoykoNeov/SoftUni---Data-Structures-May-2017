@@ -4,9 +4,9 @@ public class Item : IComparable
 {
     internal int X1 { get; set; }
     internal int Y1 { get; set; }
-    int X2 { get { return X1 + 10; } }
+    internal int X2 { get { return X1 + 10; } }
     int Y2 { get { return Y1 + 10; } }
-    string Name { get; set; }
+    internal string Name { get; private set; }
 
     public Item(string name, int x1, int y1)
     {

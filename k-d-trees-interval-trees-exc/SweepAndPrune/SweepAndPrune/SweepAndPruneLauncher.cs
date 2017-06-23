@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public class SweepAndPruneLauncher
 {
@@ -44,15 +43,15 @@ public class SweepAndPruneLauncher
                         ByName[parameters[1]].X1 = int.Parse(parameters[2]);
                         ByName[parameters[1]].Y1 = int.Parse(parameters[3]);
                         SortList(itemList);
+                        tickCount++;
                         break;
                     }
             }
 
             if (gameStarted && tickCount > 0)
             {
-                CheckColisions(itemList);
+                CheckColisions(itemList, tickCount);
             }
-
         }
     }
 
@@ -61,13 +60,21 @@ public class SweepAndPruneLauncher
         itemList.Sort();
     }
 
-    private static void CheckColisions(List<Item> itemList)
+    private static void CheckColisions(List<Item> itemList, int tickCount)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
-            for (int j = 1; j < itemList.Count; j++)
+            for (int j = i + 1; j < itemList.Count; j++)
             {
+                if (itemList[i].X2 < itemList[j].X1)
+                {
+                    break;
+                }
 
+                if (itemList[i].Intersects(itemList[j]))
+                {
+                    Console.WriteLine($"({tickCount}) {itemList[i].Name} collides with {itemList[j].Name}");
+                }
             }
         }
     }
