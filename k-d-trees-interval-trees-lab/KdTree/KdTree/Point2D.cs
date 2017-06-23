@@ -18,10 +18,15 @@ public class Point2D : IComparable<Point2D>
 
     public override bool Equals(object obj)
     {
-        if (obj == this) return true;
-        if (obj == null) return false;
-        if (obj.GetType() != this.GetType()) return false; 
-        Point2D that = (Point2D)obj;
+       Point2D that = obj as Point2D;
+
+        if (obj == null)
+        {
+            return false;
+        }
+
+     // if (obj.GetType() != this.GetType()) return false; 
+     // Point2D that = (Point2D)obj;
         return this.X == that.X && this.Y == that.Y;
     }
 
