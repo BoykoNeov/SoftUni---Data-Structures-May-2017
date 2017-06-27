@@ -17,13 +17,7 @@ public class Node<T>
 
     public Node<T>[] Children { get; set; }
 
-    public bool ShouldSplit
-    {
-        get
-        {
-            throw new NotImplementedException();
-        }
-    }
+    public bool ShouldSplit => this.Items.Count == MaxItemCount && this.Children == null;
 
     public override string ToString()
     {
