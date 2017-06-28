@@ -1,6 +1,5 @@
 ﻿namespace Hierarchy.Tests
 {
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
