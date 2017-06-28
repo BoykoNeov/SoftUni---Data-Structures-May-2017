@@ -18,6 +18,7 @@ public class PersonCollection : IPersonCollection
         personsByDomainSortedByEmail = new Dictionary<string, SortedDictionary<string, Person>>();
         personsByNameAndTownSortedByEmail = new Dictionary<string, SortedDictionary<string, Person>>();
         personsByAgeSortedByAgeThenEmail = new SortedDictionary<int, SortedDictionary<string, Person>>();
+        personsByAgeAndTown = new SortedDictionary<int, Dictionary<string, SortedDictionary<string, Person>>>();
     }
 
     public bool AddPerson(string email, string name, int age, string town)
@@ -54,6 +55,19 @@ public class PersonCollection : IPersonCollection
             this.personsByAgeSortedByAgeThenEmail.Add(age, new SortedDictionary<string, Person>());
         }
         this.personsByAgeSortedByAgeThenEmail[age].Add(email, newPerson);
+
+        // Adds person to the age and town dictionary
+        if (!this.personsByAgeAndTown.ContainsKey(age))
+        {
+            this.personsByAgeAndTown.Add(age, new Dictionary<string, SortedDictionary<string, Person>>());
+        }
+
+        if (!this.personsByAgeAndTown[age].ContainsKey(town))
+        {
+            this.personsByAgeAndTown[age].Add(town, new SortedDictionary<string, Person>());
+        }
+
+        this.personsByAgeAndTown[age][town].Add(email, newPerson);
 
         return true;
     }
@@ -104,6 +118,9 @@ public class PersonCollection : IPersonCollection
             // Deletes person from the age dictionary
             this.personsByAgeSortedByAgeThenEmail[age].Remove(email);
 
+            // Deletes person from age and town dictionary
+            this.personsByAgeAndTown[age][town].Remove(email);
+
             return true;
         }
     }
@@ -146,21 +163,34 @@ public class PersonCollection : IPersonCollection
         }
     }
 
-    public IEnumerable<Person> FindPersons(
-        int startAge, int endAge, string town)
+    public IEnumerable<Person> FindPersons(int startAge, int endAge, string town)
     {
-        foreach (var ages in this.personsByAgeSortedByAgeThenEmail)
+        foreach (KeyValuePair<int, Dictionary<string, SortedDictionary<string, Person>>> ages in this.personsByAgeAndTown)
         {
             if (ages.Key >= startAge && ages.Key <= endAge)
             {
-                foreach (KeyValuePair<string, Person> kvp in ages.Value)
+                if (ages.Value.ContainsKey(town))
                 {
-                    if (kvp.Value.Town == town)
+                    foreach (KeyValuePair<string, Person> persons in ages.Value[town])
                     {
-                        yield return kvp.Value;
+                        yield return persons.Value;
                     }
                 }
             }
         }
+
+        //foreach (KeyValuePair<int, SortedDictionary<string, Person>> ages in this.personsByAgeSortedByAgeThenEmail)
+        //{
+        //    if (ages.Key >= startAge && ages.Key <= endAge)
+        //    {
+        //        foreach (KeyValuePair<string, Person> kvp in ages.Value)
+        //        {
+        //            if (kvp.Value.Town == town)
+        //            {
+        //                yield return kvp.Value;
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
