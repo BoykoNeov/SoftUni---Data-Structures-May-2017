@@ -233,12 +233,14 @@
 
         public IEnumerable<Bunny> ListBunniesBySuffix(string suffix)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
             char[] charArray = suffix.ToCharArray();
             Array.Reverse(charArray);
 
             var bunniesBySuffix = reversedBunnyNames.GetByPrefix(new string(charArray));
-            SortedSet<Bunny> sortedBunnies = new SortedSet<Bunny>();
+
+            SortBunniesByReverseNameAndNameLength sortReverse = new SortBunniesByReverseNameAndNameLength();
+            SortedSet<Bunny> sortedBunnies = new SortedSet<Bunny>(sortReverse);
 
             foreach (string bunnyName in bunniesBySuffix)
             {
