@@ -25,7 +25,7 @@
 
         public int CompareTo(Bunny other)
         {
-                return this.Name.CompareTo(other.Name);
+            return other.Name.CompareTo(this.Name); 
         }
     }
 }
